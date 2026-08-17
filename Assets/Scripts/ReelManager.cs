@@ -9,7 +9,6 @@ public class ReelManager : MonoBehaviour
 
     [SerializeField] private RectTransform content;
     [SerializeField] private float snapSpeed = 10f;
-
     private int currentReel = 0;
     private float reelHeight;
 
@@ -24,38 +23,32 @@ public class ReelManager : MonoBehaviour
 
     private void Update()
     {
-        // float scroll = Mouse.current.scroll.ReadValue().y;
+        float scroll = Mouse.current.scroll.ReadValue().y;
 
-        // if (scroll < 0)
-        // {
-        //     GoToNextReel();
-        // }
-
-        // float targetY = currentReel * reelHeight;
-
-        // Vector2 targetPosition = new Vector2(
-        //     content.anchoredPosition.x,
-        //     targetY
-        // );
-
-        // content.anchoredPosition = Vector2.Lerp(
-        //     content.anchoredPosition,
-        //     targetPosition,
-        //     snapSpeed * Time.deltaTime
-        // );
+        if (scroll < 0)
+        {
+            GoToNextReel();
+        }
     }
 
     private void GoToNextReel()
     {
-        if (currentReel >= content.childCount - 1)
-            return;
-
         currentReel++;
+
+        if (currentReel >= content.childCount)
+        {
+            currentReel = 0;
+        }
+
+        content.anchoredPosition = new Vector2(
+            content.anchoredPosition.x,
+            currentReel * reelHeight
+        );
 
         PlayRandomReel();
     }
 
-    private void PlayRandomReel()
+    public void PlayRandomReel()
     {
         if (reelPool.Length == 0)
         {

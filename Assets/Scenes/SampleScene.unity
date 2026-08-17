@@ -2040,6 +2040,7 @@ MonoBehaviour:
   hiddenPosition: {x: 0, y: -0.2, z: 0}
   pulledOutPosition: {x: 0, y: 0, z: 0}
   pullSpeed: 8
+  reelManager: {fileID: 1190250542}
 --- !u!1 &1619632707
 GameObject:
   m_ObjectHideFlags: 0

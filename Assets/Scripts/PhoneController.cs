@@ -6,6 +6,7 @@ public class PhoneController : MonoBehaviour
     [SerializeField] private Vector3 hiddenPosition;
     [SerializeField] private Vector3 pulledOutPosition;
     [SerializeField] private float pullSpeed = 8f;
+    [SerializeField] private ReelManager reelManager;
 
     private bool phoneOut = false;
 
@@ -21,6 +22,11 @@ public class PhoneController : MonoBehaviour
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
             phoneOut = !phoneOut;
+
+            if (phoneOut)
+            {
+                reelManager.PlayRandomReel();
+            }
         }
 
         Vector3 targetPosition;
