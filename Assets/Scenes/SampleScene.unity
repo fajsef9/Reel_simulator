@@ -1943,6 +1943,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207604671}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1218644679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1218644681}
+  - component: {fileID: 1218644680}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1218644680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218644679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ec753510e38c240b1fd0b6dc98a885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+--- !u!4 &1218644681
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218644679}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1373205936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2542,7 +2586,7 @@ MonoBehaviour:
   teachingTimeMax: 15
   pauseBeforeScan: 1.5
   pauseAfterScan: 1
-  turnSpeed: 35
+  turnSpeed: 50
   scanSpeed: 20
 --- !u!114 &1747347674
 MonoBehaviour:
@@ -2560,6 +2604,7 @@ MonoBehaviour:
   phoneController: {fileID: 1479112515}
   visionDistance: 15
   visionAngle: 90
+  gameManager: {fileID: 1218644680}
 --- !u!1 &1770697839
 GameObject:
   m_ObjectHideFlags: 0
@@ -3061,3 +3106,4 @@ SceneRoots:
   - {fileID: 1836635869}
   - {fileID: 1747347672}
   - {fileID: 1972979612}
+  - {fileID: 1218644681}
