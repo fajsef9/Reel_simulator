@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class ReelManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class ReelManager : MonoBehaviour
     [Header("Points")]
     [SerializeField] private float pointsDelay = 2f;
     [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private RarityPopupAnimator rarityPopupAnimator;
 
     private int currentReel = 0;
     private float reelHeight;
@@ -46,6 +48,7 @@ public class ReelManager : MonoBehaviour
             .GetComponent<RectTransform>()
             .rect.height;
         scoreText.text = "SCORE: 0";
+
         PlayRandomReel();
     }
 
@@ -138,12 +141,55 @@ public class ReelManager : MonoBehaviour
         pointsAwarded = true;
 
         currentScore += currentReelData.points;
+
         scoreText.text = "SCORE: " + currentScore;
+
         // Debug.Log(
         //     "Current Score: " +
         //     currentScore
         // );
+
+        ShowRarityPopup();
     }
+    private void ShowRarityPopup()
+    {
+        string text =
+            currentReelData.rarity.ToString().ToUpper() +
+            "\n+" +
+            currentReelData.points;
+
+        Color textColor = Color.white;
+
+        switch (currentReelData.rarity)
+        {
+            case ReelRarity.Common:
+                textColor = Color.white;
+                break;
+
+            case ReelRarity.Uncommon:
+                textColor = Color.green;
+                break;
+
+            case ReelRarity.Rare:
+                textColor = Color.blue;
+                break;
+
+            case ReelRarity.Legendary:
+                textColor = Color.yellow;
+                break;
+
+            case ReelRarity.Mythical:
+                textColor = Color.red;
+                break;
+        }
+
+        rarityPopupAnimator.Show(
+            text,
+            textColor
+        );
+    }
+
+
 
     private ReelData SelectRandomReel()
     {
