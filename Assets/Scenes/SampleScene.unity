@@ -864,6 +864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 761826892}
+  - component: {fileID: 761826893}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -887,6 +888,29 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!136 &761826893
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761826891}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &770639039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,7 +1971,7 @@ Transform:
   m_GameObject: {fileID: 1373205936}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.808, z: -0.273}
+  m_LocalPosition: {x: 0, y: 0.808, z: 0.263}
   m_LocalScale: {x: 0.029916707, y: 0.022304766, z: 0.22127743}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2475,6 +2499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1747347672}
   - component: {fileID: 1747347673}
+  - component: {fileID: 1747347674}
   m_Layer: 0
   m_Name: Teacher
   m_TagString: Untagged
@@ -2490,7 +2515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747347671}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.13874587, y: -1.009, z: 1.4107862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2499,7 +2524,7 @@ Transform:
   - {fileID: 1770697840}
   - {fileID: 1373205937}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1747347673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2514,11 +2539,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeacherController
   scanAngle: 60
   teachingTimeMin: 5
-  teachingTimeMax: 8
+  teachingTimeMax: 15
   pauseBeforeScan: 1.5
   pauseAfterScan: 1
   turnSpeed: 35
   scanSpeed: 20
+--- !u!114 &1747347674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747347671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41be208db28f1b7498d76f0adfd213a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeacherVision
+  player: {fileID: 761826892}
+  phoneController: {fileID: 1479112515}
+  visionDistance: 15
+  visionAngle: 90
 --- !u!1 &1770697839
 GameObject:
   m_ObjectHideFlags: 0
@@ -2757,7 +2798,7 @@ GameObject:
   - component: {fileID: 1972979610}
   - component: {fileID: 1972979609}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

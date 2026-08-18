@@ -47,7 +47,7 @@ public class TeacherController : MonoBehaviour
             // =========================
 
             Quaternion centerRotation =
-                blackboardRotation * Quaternion.Euler(0f, 180f, 0f);
+                blackboardRotation * Quaternion.Euler(0f, -180f, 0f);
 
             yield return RotateTo(
                 centerRotation,
@@ -62,28 +62,22 @@ public class TeacherController : MonoBehaviour
             yield return new WaitForSeconds(pauseBeforeScan);
 
 
-            // =========================
-            // SCAN LEFT
-            // =========================
-
-            Quaternion leftRotation =
+            // SCAN RIGHT
+            Quaternion rightRotation =
                 centerRotation * Quaternion.Euler(0f, -scanAngle, 0f);
 
             yield return RotateTo(
-                leftRotation,
+                rightRotation,
                 scanSpeed
             );
 
 
-            // =========================
-            // SCAN RIGHT
-            // =========================
-
-            Quaternion rightRotation =
+            // SCAN LEFT
+            Quaternion leftRotation =
                 centerRotation * Quaternion.Euler(0f, scanAngle, 0f);
 
             yield return RotateTo(
-                rightRotation,
+                leftRotation,
                 scanSpeed
             );
 
