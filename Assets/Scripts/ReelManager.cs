@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class ReelManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class ReelManager : MonoBehaviour
 
     [Header("Points")]
     [SerializeField] private float pointsDelay = 2f;
+    [SerializeField] private TMP_Text scoreText;
 
     private int currentReel = 0;
     private float reelHeight;
@@ -43,7 +45,7 @@ public class ReelManager : MonoBehaviour
         reelHeight = content.GetChild(0)
             .GetComponent<RectTransform>()
             .rect.height;
-
+        scoreText.text = "SCORE: 0";
         PlayRandomReel();
     }
 
@@ -136,11 +138,11 @@ public class ReelManager : MonoBehaviour
         pointsAwarded = true;
 
         currentScore += currentReelData.points;
-
-        Debug.Log(
-            "Current Score: " +
-            currentScore
-        );
+        scoreText.text = "SCORE: " + currentScore;
+        // Debug.Log(
+        //     "Current Score: " +
+        //     currentScore
+        // );
     }
 
     private ReelData SelectRandomReel()
