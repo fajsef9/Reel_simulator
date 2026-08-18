@@ -39,6 +39,7 @@ public class ReelManager : MonoBehaviour
     private bool pointsAwarded = false;
 
     private int currentScore = 0;
+    public int CurrentScore => currentScore;
 
     public bool IsVideoPlaying => videoPlayer.isPlaying;
 
