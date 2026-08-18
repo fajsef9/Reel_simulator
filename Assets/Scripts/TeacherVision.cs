@@ -15,6 +15,9 @@ public class TeacherVision : MonoBehaviour
 
     private void Update()
     {
+        if (gameManager.IsGameOver)
+            return;
+
         Vector3 directionToPlayer = player.position - transform.position;
 
         float distance = directionToPlayer.magnitude;

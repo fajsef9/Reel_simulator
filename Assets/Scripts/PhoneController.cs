@@ -30,7 +30,7 @@ public class PhoneController : MonoBehaviour
                 reelManager.PlayRandomReel();
             }
         }
-        if (phoneOut)
+        if (phoneOut && reelManager.IsVideoPlaying)
         {
             brainrotManager.RestoreBrainrot(
                 brainrotRestoreRate * Time.deltaTime

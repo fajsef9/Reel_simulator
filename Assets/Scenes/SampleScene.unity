@@ -2068,11 +2068,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ReelManager
   videoPlayer: {fileID: 1200214665}
   reelPool:
-  - {fileID: 32900000, guid: ad725e5ca2f75d94ca9d37ef0e155374, type: 3}
-  - {fileID: 32900000, guid: 123d2cfbf9e36d043a0d63559dd9d292, type: 3}
-  - {fileID: 32900000, guid: 537a02794b295f842853f6b3bcf15891, type: 3}
+  - video: {fileID: 32900000, guid: 624258fea0421ec4ab70ad1a6bfe1fe0, type: 3}
+    rarity: 0
+    points: 1
+  - video: {fileID: 32900000, guid: aafdc4be0f28fd94da3c1113b1dd5037, type: 3}
+    rarity: 0
+    points: 1
+  - video: {fileID: 32900000, guid: d642e5bcadd6d2442983565680e69ca0, type: 3}
+    rarity: 0
+    points: 1
+  - video: {fileID: 32900000, guid: d7ce97db1693ce8478756347a5b6ecdc, type: 3}
+    rarity: 0
+    points: 1
+  - video: {fileID: 32900000, guid: 24245d70c65fa8a49a787825c7345054, type: 3}
+    rarity: 0
+    points: 1
+  - video: {fileID: 32900000, guid: 5e77b4eff242ffd47880a1da64f6ec69, type: 3}
+    rarity: 0
+    points: 1
+  - video: {fileID: 32900000, guid: 18adfcc808ec9844ab5f89f1c9eb896b, type: 3}
+    rarity: 1
+    points: 5
+  - video: {fileID: 32900000, guid: 1f9cdb477c1f60448a06e455984ab375, type: 3}
+    rarity: 1
+    points: 5
+  - video: {fileID: 32900000, guid: b670fbafb05b88744b19ce058e902aed, type: 3}
+    rarity: 1
+    points: 5
+  - video: {fileID: 32900000, guid: 0374cee4bb9c6f242a4e6c010448399e, type: 3}
+    rarity: 1
+    points: 5
+  - video: {fileID: 32900000, guid: 2928f32f4df761640bf761e97f0c624b, type: 3}
+    rarity: 1
+    points: 5
+  - video: {fileID: 32900000, guid: 89379b3290104944a880606c0e63c3db, type: 3}
+    rarity: 2
+    points: 10
+  - video: {fileID: 32900000, guid: 8a629cc7663df6f46ac7a08441461579, type: 3}
+    rarity: 2
+    points: 10
+  - video: {fileID: 32900000, guid: 83bcf2e3c6c163542927f02a2db983dc, type: 3}
+    rarity: 2
+    points: 10
+  - video: {fileID: 32900000, guid: 66feed19151f3eb4081ac8b0629a926e, type: 3}
+    rarity: 3
+    points: 50
+  - video: {fileID: 32900000, guid: 239d1b6c4d0bb7045b802c66889ca4e3, type: 3}
+    rarity: 3
+    points: 50
+  - video: {fileID: 32900000, guid: c3e1396c7ab583648a5d424f3130df81, type: 3}
+    rarity: 4
+    points: 100
+  gameManager: {fileID: 1218644680}
+  phoneController: {fileID: 1479112515}
   content: {fileID: 240617185}
   snapSpeed: 10
+  commonChance: 55
+  uncommonChance: 25
+  rareChance: 12
+  legendaryChance: 6
+  mythicalChance: 2
+  pointsDelay: 2
 --- !u!4 &1190250543
 Transform:
   m_ObjectHideFlags: 0
@@ -2177,7 +2233,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200214661}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 123d2cfbf9e36d043a0d63559dd9d292, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: ad725e5ca2f75d94ca9d37ef0e155374, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -2389,8 +2445,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrainrotManager
   brainrotBar: {fileID: 354888540}
+  gameManager: {fileID: 1218644680}
   maxBrainrot: 100
-  drainRate: 2
+  drainRate: 5
 --- !u!1 &1373205936
 GameObject:
   m_ObjectHideFlags: 0

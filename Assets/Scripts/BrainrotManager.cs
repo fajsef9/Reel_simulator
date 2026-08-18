@@ -4,11 +4,13 @@ using UnityEngine.UI;
 public class BrainrotManager : MonoBehaviour
 {
     [SerializeField] private Slider brainrotBar;
+    [SerializeField] private GameManager gameManager;
 
     [SerializeField] private float maxBrainrot = 100f;
     [SerializeField] private float drainRate = 2f;
 
     private float currentBrainrot;
+    private bool gameOver = false;
 
     private void Start()
     {
@@ -20,6 +22,9 @@ public class BrainrotManager : MonoBehaviour
 
     private void Update()
     {
+        if (gameManager.IsGameOver)
+            return;
+
         currentBrainrot -= drainRate * Time.deltaTime;
 
         currentBrainrot = Mathf.Clamp(
@@ -29,9 +34,19 @@ public class BrainrotManager : MonoBehaviour
         );
 
         brainrotBar.value = currentBrainrot;
+
+        if (currentBrainrot <= 0f && !gameOver)
+        {
+            gameOver = true;
+            gameManager.GameOver();
+        }
     }
+
     public void RestoreBrainrot(float amount)
     {
+        if (gameManager.IsGameOver)
+            return;
+
         currentBrainrot += amount;
 
         currentBrainrot = Mathf.Clamp(
