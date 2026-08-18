@@ -11,6 +11,8 @@ public class PhoneController : MonoBehaviour
     private bool phoneOut = false;
 
     public bool IsPhoneOut => phoneOut;
+    [SerializeField] private BrainrotManager brainrotManager;
+    [SerializeField] private float brainrotRestoreRate = 8f;
 
     void Start()
     {
@@ -27,6 +29,12 @@ public class PhoneController : MonoBehaviour
             {
                 reelManager.PlayRandomReel();
             }
+        }
+        if (phoneOut)
+        {
+            brainrotManager.RestoreBrainrot(
+                brainrotRestoreRate * Time.deltaTime
+            );
         }
 
         Vector3 targetPosition;
