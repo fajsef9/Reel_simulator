@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-
-        Debug.Log("Going to Home");
+        SceneManager.LoadScene("Home");
     }
 }
