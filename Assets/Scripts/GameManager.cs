@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
+
+        gameOver = false;
+
         gameOverPanel.SetActive(false);
     }
 
@@ -28,14 +33,31 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("💀 GAME OVER!");
 
-        // Show final score
         finalScoreText.text =
             "SCORE: " + reelManager.CurrentScore;
 
-        // Show Game Over screen
         gameOverPanel.SetActive(true);
 
-        // Freeze the game
         Time.timeScale = 0f;
+    }
+
+
+
+    public void Retry()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex
+        );
+    }
+
+
+    public void GoToHome()
+    {
+        Time.timeScale = 1f;
+
+
+        Debug.Log("Going to Home");
     }
 }
