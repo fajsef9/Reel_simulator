@@ -3,14 +3,24 @@ using UnityEngine.UI;
 
 public class BrainrotManager : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private Slider brainrotBar;
+
+    [Header("Game")]
     [SerializeField] private GameManager gameManager;
 
+    [Header("Brainrot Settings")]
     [SerializeField] private float maxBrainrot = 100f;
     [SerializeField] private float drainRate = 2f;
 
+    [Header("Brainrot Colors")]
+    [SerializeField] private Color fullColor = Color.green;
+    [SerializeField] private Color emptyColor = Color.red;
+
     private float currentBrainrot;
     private bool gameOver = false;
+
+    private Image fillImage;
 
     private void Start()
     {
@@ -18,6 +28,12 @@ public class BrainrotManager : MonoBehaviour
 
         brainrotBar.maxValue = maxBrainrot;
         brainrotBar.value = currentBrainrot;
+
+        // Get the Slider's Fill image
+        fillImage = brainrotBar.fillRect
+            .GetComponent<Image>();
+
+        UpdateBrainrotColor();
     }
 
     private void Update()
@@ -25,7 +41,9 @@ public class BrainrotManager : MonoBehaviour
         if (gameManager.IsGameOver)
             return;
 
-        currentBrainrot -= drainRate * Time.deltaTime;
+        // Drain brainrot
+        currentBrainrot -=
+            drainRate * Time.deltaTime;
 
         currentBrainrot = Mathf.Clamp(
             currentBrainrot,
@@ -35,9 +53,13 @@ public class BrainrotManager : MonoBehaviour
 
         brainrotBar.value = currentBrainrot;
 
+        UpdateBrainrotColor();
+
+        // Game over
         if (currentBrainrot <= 0f && !gameOver)
         {
             gameOver = true;
+
             gameManager.GameOver();
         }
     }
@@ -56,5 +78,22 @@ public class BrainrotManager : MonoBehaviour
         );
 
         brainrotBar.value = currentBrainrot;
+
+        UpdateBrainrotColor();
+    }
+
+    private void UpdateBrainrotColor()
+    {
+        if (fillImage == null)
+            return;
+
+        float percentage =
+            currentBrainrot / maxBrainrot;
+
+        fillImage.color = Color.Lerp(
+            emptyColor,
+            fullColor,
+            percentage
+        );
     }
 }
