@@ -3201,6 +3201,7 @@ MonoBehaviour:
   pointsDelay: 2
   scoreText: {fileID: 64708720}
   rarityPopupAnimator: {fileID: 90825503}
+  handAnimator: {fileID: 1836559563}
 --- !u!4 &1190250543
 Transform:
   m_ObjectHideFlags: 0
@@ -5011,6 +5012,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WhiteHand
       objectReference: {fileID: 0}
+    - target: {fileID: 497982216308674865, guid: 930b7a19d446f4b4c9c810e37e84e625, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0aa0bc1c92ed06141b1d2c3feeff2341, type: 2}
     - target: {fileID: 705561775665358165, guid: 930b7a19d446f4b4c9c810e37e84e625, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.052477
@@ -5071,6 +5076,11 @@ PrefabInstance:
 --- !u!4 &1836559562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 705561775665358165, guid: 930b7a19d446f4b4c9c810e37e84e625, type: 3}
+  m_PrefabInstance: {fileID: 1836559561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1836559563 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 497982216308674865, guid: 930b7a19d446f4b4c9c810e37e84e625, type: 3}
   m_PrefabInstance: {fileID: 1836559561}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1836635865

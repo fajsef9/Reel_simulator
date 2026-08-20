@@ -29,6 +29,7 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private float pointsDelay = 2f;
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private RarityPopupAnimator rarityPopupAnimator;
+    [SerializeField] private Animator handAnimator;
 
     private int currentReel = 0;
     private float reelHeight;
@@ -283,6 +284,7 @@ public class ReelManager : MonoBehaviour
 
     private void GoToNextReel()
     {
+        handAnimator.SetTrigger("Scroll");
         currentReel++;
 
         if (currentReel >= content.childCount)
