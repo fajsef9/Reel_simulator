@@ -4508,6 +4508,7 @@ MonoBehaviour:
   pauseAfterScan: 1
   turnSpeed: 50
   scanSpeed: 20
+  animator: {fileID: 1947137939}
 --- !u!114 &1747347674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4523,9 +4524,12 @@ MonoBehaviour:
   player: {fileID: 761826892}
   phoneController: {fileID: 1479112515}
   gameManager: {fileID: 1218644680}
+  teacherController: {fileID: 1747347673}
+  animator: {fileID: 1947137939}
   visionDistance: 15
   visionAngle: 90
   catchDelay: 0.5
+  angryAnimationTime: 1.5
 --- !u!1 &1761602281
 GameObject:
   m_ObjectHideFlags: 0
@@ -5511,6 +5515,11 @@ PrefabInstance:
 --- !u!4 &1947137938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400308, guid: cc3c26aad252b7f42a9e844aff96ef79, type: 3}
+  m_PrefabInstance: {fileID: 1947137937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1947137939 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: cc3c26aad252b7f42a9e844aff96ef79, type: 3}
   m_PrefabInstance: {fileID: 1947137937}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1953195007
