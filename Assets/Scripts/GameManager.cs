@@ -31,8 +31,6 @@ public class GameManager : MonoBehaviour
 
         gameOver = true;
 
-        Debug.Log("💀 GAME OVER!");
-
         finalScoreText.text =
             "SCORE: " + reelManager.CurrentScore;
 
