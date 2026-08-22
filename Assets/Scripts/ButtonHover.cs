@@ -7,6 +7,10 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private float hoverRotation = 5f;
     [SerializeField] private float speed = 12f;
 
+    [SerializeField] private AudioClip hoverSound;
+    [SerializeField] private float hoverVolume = 0.5f;
+
+    private AudioSource audioSource;
     private Vector3 originalScale;
     private Quaternion originalRotation;
     private Vector3 targetScale;
@@ -18,6 +22,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         originalRotation = transform.localRotation;
         targetScale = originalScale;
         targetRotation = originalRotation;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -41,6 +46,11 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         targetRotation = originalRotation *
             Quaternion.Euler(0f, 0f, hoverRotation);
+
+        audioSource.PlayOneShot(
+            hoverSound,
+            hoverVolume
+        );
     }
 
     public void OnPointerExit(PointerEventData eventData)
