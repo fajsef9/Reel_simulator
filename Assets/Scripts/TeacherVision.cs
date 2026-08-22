@@ -75,6 +75,6 @@ public class TeacherVision : MonoBehaviour
         yield return new WaitForSeconds(angryAnimationTime);
 
         // End the game
-        gameManager.GameOver();
+        gameManager.GameOverTeacherCaught();
     }
 }

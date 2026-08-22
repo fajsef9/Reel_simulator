@@ -60,7 +60,7 @@ public class BrainrotManager : MonoBehaviour
         {
             gameOver = true;
 
-            gameManager.GameOver();
+            gameManager.GameOverBrainrot();
         }
     }
 
