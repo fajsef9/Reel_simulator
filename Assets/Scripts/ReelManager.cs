@@ -173,7 +173,7 @@ public class ReelManager : MonoBehaviour
                 break;
 
             case ReelRarity.Rare:
-                textColor = Color.blue;
+                textColor = Color.cyan;
                 break;
 
             case ReelRarity.Legendary:
