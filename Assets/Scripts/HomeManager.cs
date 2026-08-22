@@ -27,6 +27,10 @@ public class HomeManager : MonoBehaviour
     {
         howToPlayPanel.SetActive(false);
     }
+    public void ShowCredits()
+    {
+        creditsPanel.SetActive(true);
+    }
 
     public void CloseCredits()
     {
