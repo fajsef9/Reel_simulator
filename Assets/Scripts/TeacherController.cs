@@ -12,8 +12,13 @@ public class TeacherController : MonoBehaviour
     [SerializeField] private float pauseAfterScan = 1f;
 
     [Header("Movement")]
-    [SerializeField] private float turnSpeed = 35f;
-    [SerializeField] private float scanSpeed = 20f;
+    [SerializeField] private float turnSpeed = 35f;   // degrees per second
+    [SerializeField] private float scanSpeed = 20f;   // degrees per second
+
+    [Header("Turn Direction")]
+    [Tooltip("The direction she turns to face the class, leading with her right side. " +
+             "+1 or -1 depending on how your model's forward axis is set up — flip this if she turns the wrong way.")]
+    [SerializeField] private float turnDirection = -1f;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -34,42 +39,47 @@ public class TeacherController : MonoBehaviour
             float teachingTime = Random.Range(teachingTimeMin, teachingTimeMax);
             yield return new WaitForSeconds(teachingTime);
 
-            // Turn toward the class
+            // Turn toward the class, leading with her right side (turnDirection controls this)
             animator.SetTrigger("TurnAround");
-
-            Quaternion centerRotation = blackboardRotation * Quaternion.Euler(0f, -180f, 0f);
-            yield return RotateTo(centerRotation, turnSpeed);
+            yield return RotateBy(180f * -turnDirection, turnSpeed);
 
             // Wait before scanning
             yield return new WaitForSeconds(pauseBeforeScan);
 
-            // Scan right
-            Quaternion rightRotation = centerRotation * Quaternion.Euler(0f, -scanAngle, 0f);
-            yield return RotateTo(rightRotation, scanSpeed);
-
-            // Scan left
-            Quaternion leftRotation = centerRotation * Quaternion.Euler(0f, scanAngle, 0f);
-            yield return RotateTo(leftRotation, scanSpeed);
+            // Scan right, then back to center, then left, then back to center
+            yield return RotateBy(-scanAngle, scanSpeed);
+            yield return RotateBy(scanAngle, scanSpeed);   // back to center
+            yield return RotateBy(scanAngle, scanSpeed);
+            yield return RotateBy(-scanAngle, scanSpeed);  // back to center
 
             // Wait after scanning
             yield return new WaitForSeconds(pauseAfterScan);
 
-            // Return to the blackboard
+            // Turn back to the blackboard, continuing in the SAME direction she turned initially
+            // (not reversing) so the motion reads as one continuous, natural turn.
             animator.SetTrigger("ReturnToBoard");
-            yield return RotateTo(blackboardRotation, turnSpeed);
+            yield return RotateBy(180f * turnDirection, turnSpeed);
+
+            // Snap-correct any tiny float drift so she's exactly facing the board again
+            transform.rotation = blackboardRotation;
         }
     }
 
-    private IEnumerator RotateTo(Quaternion targetRotation, float speed)
+    private IEnumerator RotateBy(float angleDegrees, float speed)
     {
-        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.5f)
+        float rotated = 0f;
+        float target = Mathf.Abs(angleDegrees);
+        float sign = Mathf.Sign(angleDegrees);
+
+        while (rotated < target)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, speed * Time.deltaTime);
+            float step = Mathf.Min(speed * Time.deltaTime, target - rotated);
+            transform.Rotate(0f, sign * step, 0f, Space.Self);
+            rotated += step;
             yield return null;
         }
-
-        transform.rotation = targetRotation;
     }
+
     public void StopTeacher()
     {
         StopAllCoroutines();
