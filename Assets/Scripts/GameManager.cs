@@ -59,11 +59,6 @@ public class GameManager : MonoBehaviour
 
     public void GameOverTeacherCaught()
     {
-        if (gameOver)
-            return;
-
-        gameOver = true;
-
         ShowRandomMessage(teacherMessages);
 
         finalScoreText.text =
@@ -72,6 +67,13 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
 
         Time.timeScale = 0f;
+    }
+    public void StopGame()
+    {
+        if (gameOver)
+            return;
+
+        gameOver = true;
     }
 
     private void ShowRandomMessage(string[] messages)

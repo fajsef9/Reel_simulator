@@ -18,6 +18,7 @@ public class TeacherVision : MonoBehaviour
 
     [Header("Game Over")]
     [SerializeField] private float angryAnimationTime = 1.5f;
+    [SerializeField] private TeacherAudio teacherAudio;
 
     private float catchTimer = 0f;
     private bool hasCaughtPlayer = false;
@@ -37,7 +38,10 @@ public class TeacherVision : MonoBehaviour
             return;
         }
 
-        float angle = Vector3.Angle(transform.forward, directionToPlayer);
+        float angle = Vector3.Angle(
+            transform.forward,
+            directionToPlayer
+        );
 
         // Player is outside the vision cone
         if (angle > visionAngle / 2f)
@@ -54,6 +58,7 @@ public class TeacherVision : MonoBehaviour
             if (catchTimer >= catchDelay)
             {
                 hasCaughtPlayer = true;
+
                 StartCoroutine(CatchPlayer());
             }
         }
@@ -65,16 +70,20 @@ public class TeacherVision : MonoBehaviour
 
     private IEnumerator CatchPlayer()
     {
-        // Stop the teacher from continuing the scan
         teacherController.StopTeacher();
 
-        // Play angry animation
+        teacherAudio.StopTalking();
+
         animator.SetTrigger("Angry");
 
-        // Let the animation play
-        yield return new WaitForSeconds(angryAnimationTime);
+        yield return new WaitForSeconds(
+            angryAnimationTime
+        );
 
-        // End the game
+        yield return teacherAudio.PlayCaughtSound();
+
+        gameManager.StopGame();
+
         gameManager.GameOverTeacherCaught();
     }
 }
