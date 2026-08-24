@@ -3,42 +3,43 @@ using System.Collections;
 
 public class TeacherAudio : MonoBehaviour
 {
-    [Header("Teacher Talking")]
-    [SerializeField] private AudioClip[] talkingSounds;
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource teachingAudioSource;
+    [SerializeField] private AudioSource angryAudioSource;
+
+    [Header("Teaching Audio")]
+    [SerializeField] private AudioClip[] teachingSounds;
     [SerializeField] private float minDelay = 0.5f;
     [SerializeField] private float maxDelay = 2f;
 
-    [Header("Teacher Angry")]
+    [Header("Angry Audio")]
     [SerializeField] private AudioClip angrySound;
 
-    private AudioSource audioSource;
     private bool teacherCaught = false;
+    private Coroutine teachingRoutine;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
-        StartCoroutine(TalkingRoutine());
+        teachingRoutine = StartCoroutine(TeachingRoutine());
     }
 
-    private IEnumerator TalkingRoutine()
+    private IEnumerator TeachingRoutine()
     {
         while (!teacherCaught)
         {
-            if (talkingSounds.Length > 0)
+            if (teachingSounds.Length > 0)
             {
-                AudioClip randomSound =
-                    talkingSounds[
-                        Random.Range(0, talkingSounds.Length)
-                    ];
+                AudioClip randomSound = teachingSounds[
+                    Random.Range(0, teachingSounds.Length)
+                ];
 
-                audioSource.clip = randomSound;
+                teachingAudioSource.clip = randomSound;
+                teachingAudioSource.Play();
 
-                audioSource.Play();
+                yield return new WaitForSeconds(randomSound.length);
 
-                yield return new WaitForSeconds(
-                    randomSound.length
-                );
+                if (teacherCaught)
+                    yield break;
 
                 float delay = Random.Range(
                     minDelay,
@@ -54,20 +55,25 @@ public class TeacherAudio : MonoBehaviour
         }
     }
 
-    public void StopTalking()
+    public void StopTeaching()
     {
         teacherCaught = true;
 
-        audioSource.Stop();
+        if (teachingRoutine != null)
+        {
+            StopCoroutine(teachingRoutine);
+        }
+
+        teachingAudioSource.Stop();
     }
 
     public IEnumerator PlayCaughtSound()
     {
-        StopTalking();
+        StopTeaching();
 
         if (angrySound != null)
         {
-            audioSource.PlayOneShot(angrySound);
+            angryAudioSource.PlayOneShot(angrySound);
 
             yield return new WaitForSeconds(
                 angrySound.length

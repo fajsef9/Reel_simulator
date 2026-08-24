@@ -12,16 +12,15 @@ public class TeacherController : MonoBehaviour
     [SerializeField] private float pauseAfterScan = 1f;
 
     [Header("Movement")]
-    [SerializeField] private float turnSpeed = 35f;   // degrees per second
-    [SerializeField] private float scanSpeed = 20f;   // degrees per second
+    [SerializeField] private float turnSpeed = 35f;
+    [SerializeField] private float scanSpeed = 20f;
 
     [Header("Turn Direction")]
-    [Tooltip("The direction she turns to face the class, leading with her right side. " +
-             "+1 or -1 depending on how your model's forward axis is set up — flip this if she turns the wrong way.")]
     [SerializeField] private float turnDirection = -1f;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
+
     private bool isFacingBoard = true;
     public bool IsFacingBoard => isFacingBoard;
 
@@ -29,6 +28,7 @@ public class TeacherController : MonoBehaviour
 
     private void Start()
     {
+        isFacingBoard = true;
         blackboardRotation = transform.rotation;
         StartCoroutine(TeacherRoutine());
     }
@@ -37,33 +37,43 @@ public class TeacherController : MonoBehaviour
     {
         while (true)
         {
-            // Teach while facing the blackboard
-            float teachingTime = Random.Range(teachingTimeMin, teachingTimeMax);
+            isFacingBoard = true;
+
+            float teachingTime = Random.Range(
+                teachingTimeMin,
+                teachingTimeMax
+            );
+
             yield return new WaitForSeconds(teachingTime);
 
-            // Turn toward the class, leading with her right side (turnDirection controls this)
-            animator.SetTrigger("TurnAround");
-            yield return RotateBy(180f * -turnDirection, turnSpeed);
+            isFacingBoard = false;
 
-            // Wait before scanning
+            animator.SetTrigger("TurnAround");
+
+            yield return RotateBy(
+                180f * -turnDirection,
+                turnSpeed
+            );
+
             yield return new WaitForSeconds(pauseBeforeScan);
 
-            // Scan right, then back to center, then left, then back to center
             yield return RotateBy(-scanAngle, scanSpeed);
-            yield return RotateBy(scanAngle, scanSpeed);   // back to center
             yield return RotateBy(scanAngle, scanSpeed);
-            yield return RotateBy(-scanAngle, scanSpeed);  // back to center
+            yield return RotateBy(scanAngle, scanSpeed);
+            yield return RotateBy(-scanAngle, scanSpeed);
 
-            // Wait after scanning
             yield return new WaitForSeconds(pauseAfterScan);
 
-            // Turn back to the blackboard, continuing in the SAME direction she turned initially
-            // (not reversing) so the motion reads as one continuous, natural turn.
             animator.SetTrigger("ReturnToBoard");
-            yield return RotateBy(180f * turnDirection, turnSpeed);
 
-            // Snap-correct any tiny float drift so she's exactly facing the board again
+            yield return RotateBy(
+                180f * turnDirection,
+                turnSpeed
+            );
+
             transform.rotation = blackboardRotation;
+
+            isFacingBoard = true;
         }
     }
 
@@ -75,9 +85,20 @@ public class TeacherController : MonoBehaviour
 
         while (rotated < target)
         {
-            float step = Mathf.Min(speed * Time.deltaTime, target - rotated);
-            transform.Rotate(0f, sign * step, 0f, Space.Self);
+            float step = Mathf.Min(
+                speed * Time.deltaTime,
+                target - rotated
+            );
+
+            transform.Rotate(
+                0f,
+                sign * step,
+                0f,
+                Space.Self
+            );
+
             rotated += step;
+
             yield return null;
         }
     }

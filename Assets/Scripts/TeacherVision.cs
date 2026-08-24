@@ -31,7 +31,6 @@ public class TeacherVision : MonoBehaviour
         Vector3 directionToPlayer = player.position - transform.position;
         float distance = directionToPlayer.magnitude;
 
-        // Player is too far away
         if (distance > visionDistance)
         {
             catchTimer = 0f;
@@ -43,14 +42,12 @@ public class TeacherVision : MonoBehaviour
             directionToPlayer
         );
 
-        // Player is outside the vision cone
         if (angle > visionAngle / 2f)
         {
             catchTimer = 0f;
             return;
         }
 
-        // Check if the phone is visible
         if (phoneController.IsPhoneOut)
         {
             catchTimer += Time.deltaTime;
@@ -58,7 +55,6 @@ public class TeacherVision : MonoBehaviour
             if (catchTimer >= catchDelay)
             {
                 hasCaughtPlayer = true;
-
                 StartCoroutine(CatchPlayer());
             }
         }
@@ -72,15 +68,15 @@ public class TeacherVision : MonoBehaviour
     {
         teacherController.StopTeacher();
 
-        teacherAudio.StopTalking();
+        teacherAudio.StopTeaching();
 
         animator.SetTrigger("Angry");
+
+        StartCoroutine(teacherAudio.PlayCaughtSound());
 
         yield return new WaitForSeconds(
             angryAnimationTime
         );
-
-        yield return teacherAudio.PlayCaughtSound();
 
         gameManager.StopGame();
 
