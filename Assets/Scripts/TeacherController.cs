@@ -22,6 +22,8 @@ public class TeacherController : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
+    private bool isFacingBoard = true;
+    public bool IsFacingBoard => isFacingBoard;
 
     private Quaternion blackboardRotation;
 

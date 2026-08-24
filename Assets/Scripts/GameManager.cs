@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Systems")]
     [SerializeField] private ReelManager reelManager;
+    [SerializeField] private GameOverStamp gameOverStamp;
 
     private bool gameOver = false;
 
@@ -54,6 +55,8 @@ public class GameManager : MonoBehaviour
 
         gameOverPanel.SetActive(true);
 
+        gameOverStamp.Stamp();
+
         Time.timeScale = 0f;
     }
 
@@ -65,6 +68,8 @@ public class GameManager : MonoBehaviour
             "SCORE: " + reelManager.CurrentScore;
 
         gameOverPanel.SetActive(true);
+
+        gameOverStamp.Stamp();
 
         Time.timeScale = 0f;
     }
