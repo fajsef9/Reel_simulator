@@ -5,6 +5,7 @@ public class BrainrotManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private Slider brainrotBar;
+    [SerializeField] private LowBrainrotWarning lowBrainrotWarning;
 
     [Header("Game")]
     [SerializeField] private GameManager gameManager;
@@ -29,11 +30,11 @@ public class BrainrotManager : MonoBehaviour
         brainrotBar.maxValue = maxBrainrot;
         brainrotBar.value = currentBrainrot;
 
-        // Get the Slider's Fill image
         fillImage = brainrotBar.fillRect
             .GetComponent<Image>();
 
         UpdateBrainrotColor();
+        UpdateLowBrainrotWarning();
     }
 
     private void Update()
@@ -41,7 +42,6 @@ public class BrainrotManager : MonoBehaviour
         if (gameManager.IsGameOver)
             return;
 
-        // Drain brainrot
         currentBrainrot -=
             drainRate * Time.deltaTime;
 
@@ -54,8 +54,8 @@ public class BrainrotManager : MonoBehaviour
         brainrotBar.value = currentBrainrot;
 
         UpdateBrainrotColor();
+        UpdateLowBrainrotWarning();
 
-        // Game over
         if (currentBrainrot <= 0f && !gameOver)
         {
             gameOver = true;
@@ -80,6 +80,7 @@ public class BrainrotManager : MonoBehaviour
         brainrotBar.value = currentBrainrot;
 
         UpdateBrainrotColor();
+        UpdateLowBrainrotWarning();
     }
 
     private void UpdateBrainrotColor()
@@ -94,6 +95,19 @@ public class BrainrotManager : MonoBehaviour
             emptyColor,
             fullColor,
             percentage
+        );
+    }
+
+    private void UpdateLowBrainrotWarning()
+    {
+        if (lowBrainrotWarning == null)
+            return;
+
+        float normalizedBrainrot =
+            currentBrainrot / maxBrainrot;
+
+        lowBrainrotWarning.UpdateBrainrot(
+            normalizedBrainrot
         );
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     [Header("Game Systems")]
     [SerializeField] private ReelManager reelManager;
     [SerializeField] private GameOverStamp gameOverStamp;
+    [SerializeField] private TeacherAudio teacherAudio;
+    [SerializeField] private AudioSource brainrotAudioSource;
+    [SerializeField] private AudioClip brainrotEndSound;
 
     private bool gameOver = false;
 
@@ -47,6 +51,23 @@ public class GameManager : MonoBehaviour
             return;
 
         gameOver = true;
+
+        teacherAudio.StopTeaching();
+
+        reelManager.StopVideo();
+
+        StartCoroutine(BrainrotGameOverRoutine());
+    }
+    private IEnumerator BrainrotGameOverRoutine()
+    {
+        if (brainrotEndSound != null)
+        {
+            brainrotAudioSource.PlayOneShot(brainrotEndSound);
+
+            yield return new WaitForSecondsRealtime(
+                brainrotEndSound.length
+            );
+        }
 
         ShowRandomMessage(brainrotMessages);
 
