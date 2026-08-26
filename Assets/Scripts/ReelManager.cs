@@ -18,6 +18,10 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private RectTransform content;
     [SerializeField] private float snapSpeed = 10f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource scrollAudioSource;
+    [SerializeField] private AudioClip scrollSound;
+
     [Header("Rarity Chances")]
     [SerializeField] private float commonChance = 55f;
     [SerializeField] private float uncommonChance = 25f;
@@ -40,8 +44,8 @@ public class ReelManager : MonoBehaviour
     private bool pointsAwarded = false;
 
     private int currentScore = 0;
-    public int CurrentScore => currentScore;
 
+    public int CurrentScore => currentScore;
     public bool IsVideoPlaying => videoPlayer.isPlaying;
 
     private void Start()
@@ -49,6 +53,7 @@ public class ReelManager : MonoBehaviour
         reelHeight = content.GetChild(0)
             .GetComponent<RectTransform>()
             .rect.height;
+
         scoreText.text = "SCORE: 0";
 
         PlayRandomReel();
@@ -56,19 +61,13 @@ public class ReelManager : MonoBehaviour
 
     private void Update()
     {
-        // Stop everything when the game is over
         if (gameManager.IsGameOver)
             return;
 
-        // Reset the point timer while the phone is hidden
         if (!phoneController.IsPhoneOut)
         {
             pointsTimer = 0f;
         }
-
-        // =========================
-        // POINT TIMER
-        // =========================
 
         if (
             phoneController.IsPhoneOut &&
@@ -83,10 +82,6 @@ public class ReelManager : MonoBehaviour
                 AwardCurrentReelPoints();
             }
         }
-
-        // =========================
-        // SCROLL
-        // =========================
 
         float scroll = Mouse.current.scroll.ReadValue().y;
 
@@ -112,18 +107,13 @@ public class ReelManager : MonoBehaviour
             return;
         }
 
-        // Store current reel
         currentReelData = selectedReel;
 
-        // Reset points timer
         pointsTimer = 0f;
         pointsAwarded = false;
 
-        // Load video
         videoPlayer.Stop();
-
         videoPlayer.clip = selectedReel.video;
-
         videoPlayer.Play();
 
         Debug.Log(
@@ -146,13 +136,9 @@ public class ReelManager : MonoBehaviour
 
         scoreText.text = "SCORE: " + currentScore;
 
-        // Debug.Log(
-        //     "Current Score: " +
-        //     currentScore
-        // );
-
         ShowRarityPopup();
     }
+
     private void ShowRarityPopup()
     {
         string text =
@@ -191,36 +177,20 @@ public class ReelManager : MonoBehaviour
         );
     }
 
-
-
     private ReelData SelectRandomReel()
     {
         float roll = Random.Range(0f, 100f);
 
         ReelRarity selectedRarity;
 
-        // =========================
-        // COMMON — 55%
-        // =========================
-
         if (roll < commonChance)
         {
             selectedRarity = ReelRarity.Common;
         }
-
-        // =========================
-        // UNCOMMON — 25%
-        // =========================
-
         else if (roll < commonChance + uncommonChance)
         {
             selectedRarity = ReelRarity.Uncommon;
         }
-
-        // =========================
-        // RARE — 12%
-        // =========================
-
         else if (
             roll <
             commonChance +
@@ -230,11 +200,6 @@ public class ReelManager : MonoBehaviour
         {
             selectedRarity = ReelRarity.Rare;
         }
-
-        // =========================
-        // LEGENDARY — 6%
-        // =========================
-
         else if (
             roll <
             commonChance +
@@ -245,17 +210,11 @@ public class ReelManager : MonoBehaviour
         {
             selectedRarity = ReelRarity.Legendary;
         }
-
-        // =========================
-        // MYTHICAL — 2%
-        // =========================
-
         else
         {
             selectedRarity = ReelRarity.Mythical;
         }
 
-        // Find all reels with this rarity
         ReelData[] matchingReels = System.Array.FindAll(
             reelPool,
             reel =>
@@ -263,7 +222,6 @@ public class ReelManager : MonoBehaviour
                 reel.rarity == selectedRarity
         );
 
-        // Safety fallback
         if (matchingReels.Length == 0)
         {
             Debug.LogWarning(
@@ -276,7 +234,6 @@ public class ReelManager : MonoBehaviour
             ];
         }
 
-        // Pick a random reel from the selected rarity
         return matchingReels[
             Random.Range(0, matchingReels.Length)
         ];
@@ -285,6 +242,15 @@ public class ReelManager : MonoBehaviour
     private void GoToNextReel()
     {
         handAnimator.SetTrigger("Scroll");
+
+        if (
+            scrollAudioSource != null &&
+            scrollSound != null
+        )
+        {
+            scrollAudioSource.PlayOneShot(scrollSound);
+        }
+
         currentReel++;
 
         if (currentReel >= content.childCount)

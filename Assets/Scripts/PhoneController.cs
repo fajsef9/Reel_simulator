@@ -7,19 +7,24 @@ public class PhoneController : MonoBehaviour
     [SerializeField] private Vector3 pulledOutPosition;
     [SerializeField] private float pullSpeed = 8f;
     [SerializeField] private ReelManager reelManager;
+    [SerializeField] private BrainrotManager brainrotManager;
+    [SerializeField] private float brainrotRestoreRate = 8f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip pullOutSound;
+    [SerializeField] private AudioClip hideSound;
 
     private bool phoneOut = false;
 
     public bool IsPhoneOut => phoneOut;
-    [SerializeField] private BrainrotManager brainrotManager;
-    [SerializeField] private float brainrotRestoreRate = 8f;
 
-    void Start()
+    private void Start()
     {
         transform.localPosition = hiddenPosition;
     }
 
-    void Update()
+    private void Update()
     {
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
@@ -27,9 +32,22 @@ public class PhoneController : MonoBehaviour
 
             if (phoneOut)
             {
+                if (pullOutSound != null)
+                {
+                    audioSource.PlayOneShot(pullOutSound);
+                }
+
                 reelManager.PlayRandomReel();
             }
+            else
+            {
+                if (hideSound != null)
+                {
+                    audioSource.PlayOneShot(hideSound);
+                }
+            }
         }
+
         if (phoneOut && reelManager.IsVideoPlaying)
         {
             brainrotManager.RestoreBrainrot(
