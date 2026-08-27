@@ -21,6 +21,8 @@ public class ReelManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource scrollAudioSource;
     [SerializeField] private AudioClip scrollSound;
+    [SerializeField] private AudioSource pointsAudioSource;
+    [SerializeField] private AudioClip pointsSound;
 
     [Header("Rarity Chances")]
     [SerializeField] private float commonChance = 55f;
@@ -135,6 +137,11 @@ public class ReelManager : MonoBehaviour
         currentScore += currentReelData.points;
 
         scoreText.text = "SCORE: " + currentScore;
+
+        if (pointsAudioSource != null && pointsSound != null)
+        {
+            pointsAudioSource.PlayOneShot(pointsSound);
+        }
 
         ShowRarityPopup();
     }
