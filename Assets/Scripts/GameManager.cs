@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         "Phone gone. Aura gone.",
         "The teacher read all your texts",
-        "Might have to visit her cabin later",
+        "Might have to visit her cabin later ;)",
         "Caught reel handed"
     };
 
