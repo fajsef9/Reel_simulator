@@ -9452,7 +9452,7 @@ MonoBehaviour:
   pullSpeed: 8
   reelManager: {fileID: 1190250542}
   brainrotManager: {fileID: 1218644682}
-  brainrotRestoreRate: 8
+  brainrotRestoreRate: 12
   audioSource: {fileID: 512025335}
   pullOutSound: {fileID: 8300000, guid: 4400989fb74161740922f1e2cfb9e243, type: 3}
   hideSound: {fileID: 8300000, guid: 31772da698cafd34790cc5706ae694a6, type: 3}
