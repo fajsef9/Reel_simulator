@@ -9452,7 +9452,7 @@ MonoBehaviour:
   pullSpeed: 8
   reelManager: {fileID: 1190250542}
   brainrotManager: {fileID: 1218644682}
-  brainrotRestoreRate: 12
+  brainrotRestoreRate: 8
   audioSource: {fileID: 512025335}
   pullOutSound: {fileID: 8300000, guid: 4400989fb74161740922f1e2cfb9e243, type: 3}
   hideSound: {fileID: 8300000, guid: 31772da698cafd34790cc5706ae694a6, type: 3}
@@ -11178,13 +11178,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39248767c561f94bbd1494b945268eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeacherController
-  scanAngle: 60
-  teachingTimeMin: 5
-  teachingTimeMax: 15
+  scanAngle: 70
+  teachingTimeMin: 12
+  teachingTimeMax: 24
   pauseBeforeScan: 1.5
-  pauseAfterScan: 1
+  pauseAfterScan: 0.5
   turnSpeed: 50
-  scanSpeed: 20
+  scanSpeed: 25
   turnDirection: -1
   animator: {fileID: 1947137939}
 --- !u!114 &1747347674
