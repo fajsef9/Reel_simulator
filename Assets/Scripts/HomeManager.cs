@@ -36,5 +36,9 @@ public class HomeManager : MonoBehaviour
     {
         creditsPanel.SetActive(false);
     }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }   
     
 }
