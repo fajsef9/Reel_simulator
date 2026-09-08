@@ -11179,8 +11179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeacherController
   scanAngle: 70
-  teachingTimeMin: 12
-  teachingTimeMax: 24
+  teachingTimeMin: 7
+  teachingTimeMax: 18
   pauseBeforeScan: 1.5
   pauseAfterScan: 0.5
   turnSpeed: 50
