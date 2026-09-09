@@ -3,6 +3,7 @@ using UnityEngine.Video;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
+using System.IO;
 
 public class ReelManager : MonoBehaviour
 {
@@ -103,11 +104,32 @@ public class ReelManager : MonoBehaviour
 
         ReelData selectedReel = SelectRandomReel();
 
-        if (selectedReel == null || selectedReel.video == null)
+        if (selectedReel == null)
+        {
+            Debug.LogWarning("Selected reel is null!");
+            return;
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+
+        if (string.IsNullOrEmpty(selectedReel.WebFileName))
+        {
+            Debug.LogWarning(
+                "Selected reel has no Web File Name!"
+            );
+
+            return;
+        }
+
+#else
+
+        if (selectedReel.video == null)
         {
             Debug.LogWarning("Selected reel has no video!");
             return;
         }
+
+#endif
 
         currentReelData = selectedReel;
 
@@ -115,8 +137,29 @@ public class ReelManager : MonoBehaviour
         pointsAwarded = false;
 
         videoPlayer.Stop();
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+
+        videoPlayer.source = VideoSource.Url;
+
+        videoPlayer.url = Path.Combine(
+            Application.streamingAssetsPath,
+            "Reels",
+            selectedReel.WebFileName
+        );
+
+        videoPlayer.prepareCompleted -= OnVideoPrepared;
+        videoPlayer.prepareCompleted += OnVideoPrepared;
+
+        videoPlayer.Prepare();
+
+#else
+
+        videoPlayer.source = VideoSource.VideoClip;
         videoPlayer.clip = selectedReel.video;
         videoPlayer.Play();
+
+#endif
 
         Debug.Log(
             "Playing " +
@@ -126,6 +169,15 @@ public class ReelManager : MonoBehaviour
             " points"
         );
     }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+
+    private void OnVideoPrepared(VideoPlayer player)
+    {
+        player.Play();
+    }
+
+#endif
 
     private void AwardCurrentReelPoints()
     {
